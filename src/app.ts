@@ -1,70 +1,45 @@
-// const userName = 'Max';
-// userName = 'len';
-// let age = 30;
-
-// age = 29;
-
-// function add(a: number, b: number) {
-//   let result;
-//   result = a + b;
-//   return result;
-// }
-
-// if (age >= 20) {
-//   let isAdult = true;
-// }
-
-// console.log(isAdult);
-
-// console.log(result);
-
-// const add = (a: number, b: number = 1) => a + b;
-
-// const printOutput: (output: string | number) => void = output => {
-//   console.log(output);
-// }
-
-// printOutput(add(2));
-
-const button = document.querySelector('button');
-
-if (button) {
-  button.addEventListener('click', event => {
-    console.log(event);
-  });
+// type AddFn = (a: number, b:number) => number;
+interface AddFn {
+  (a: number, b: number): number
 }
 
-const hobbies = ['Sports', 'Cooking'];
-// const activeHobbies = ['Hiking', ...hobbies];
+let add: AddFn;
 
-// activeHobbies.push(...hobbies);
-
-// console.log(activeHobbies);
-
-const person = {
-  firstName: 'Max',
-  age: 30.
+add = (n1: number, n2: number) => {
+  return n1 + n2;
 };
 
-const copiedPerson = {
-  ...person,
-};
+interface Named {
+  readonly name?: string;
+  outputName?: string;
+}
 
-// console.log(copiedPerson);
+interface Greetable extends Named {
+  greet(phrase: string) : void;
+}
+  
+class Person implements Greetable {
+  name?: string;
+  age = 30;
 
-const add = (...numbers: number[]) => {
-  return numbers.reduce((curResult, curValue) => { // curResult:現在の計算結果 curValue:現在の要素
-      return curResult + curValue;
-  }, 0); // reduceは配列に対して使えるメソットで全ての配列の要素に何らかの処理を行い その結果を1つにまとめて返す
-};
+  constructor(n?: string) {
+    if (n) {
+      this.name = n;
+    }
+  }
 
-const addedNumbers = add(5, 10, 2, 3.7);
-console.log(addedNumbers);
+  greet(phrase: string) {
+    if (this.name) {
+      console.log(phrase + ' ' + this.name);
+    } else {
+      console.log('Hi!');
+    }
+  }
+}
 
-const [hobby1, hobby2, ...remainingHobbies] = hobbies;
+let user1: Greetable;
 
-console.log(hobbies, hobby1, hobby2);
+user1 = new Person();
 
-const { firstName: userName, age } = person;
-
-console.log(userName, age, person);
+user1.greet('Hello I am');
+console.log(user1);
